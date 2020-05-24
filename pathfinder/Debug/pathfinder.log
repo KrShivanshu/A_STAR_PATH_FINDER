@@ -1,0 +1,13 @@
+﻿  pathfinder.cpp
+c:\temp2\pathfinder\pathfinder\pathfinder.cpp(130): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\temp2\pathfinder\pathfinder\pathfinder.cpp(196): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\temp2\pathfinder\pathfinder\pathfinder.cpp(220): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\temp2\pathfinder\pathfinder\pathfinder.cpp(221): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\temp2\pathfinder\pathfinder\pathfinder.cpp(230): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\temp2\pathfinder\pathfinder\pathfinder.cpp(231): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\temp2\pathfinder\pathfinder\pathfinder.cpp(249): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\temp2\pathfinder\pathfinder\pathfinder.cpp(250): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\temp2\pathfinder\pathfinder\pathfinder.cpp(268): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\temp2\pathfinder\pathfinder\pathfinder.cpp(269): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\temp2\pathfinder\pathfinder\pathfinder.cpp(296): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  pathfinder.vcxproj -> C:\temp2\pathfinder\Debug\pathfinder.exe
