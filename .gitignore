@@ -7,3 +7,10 @@ pathfinder\pathfinder.vcxproj
 pathfinder\pathfinder.vcxproj.filters
 pathfinder\pathfinder.vcxproj.user
 *.log
+*.db
+.vs/pathfinder/v15/Browse.VC.db
+.vs/pathfinder/v15/ipch/AutoPCH/8ee44680b810dae0/PATHFINDER.ipch
+*.opendb
+*.ipch
+*.db
+.vs/pathfinder/v15/Browse.VC.db
