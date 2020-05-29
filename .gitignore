@@ -14,3 +14,10 @@ pathfinder\pathfinder.vcxproj.user
 *.ipch
 *.db
 .vs/pathfinder/v15/Browse.VC.db
+*.pdb
+*.idb
+*.obj
+*.log
+*.pdb
+*.ilk
+.vs/pathfinder/v15/.suo

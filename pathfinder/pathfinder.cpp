@@ -27,7 +27,7 @@ public:
 	void unsetObstacle(int x, int y) {
 		nodes[y * nMapWidth + x].bObstacle = false;
 	}
-	
+
 	bool getVisitedState(int x, int y) {
 		if (nodes[y * nMapWidth + x].bVisited == true)
 			return 1;
@@ -47,15 +47,15 @@ private:
 	struct sNode
 	{
 		bool isParent = false;
-		bool bObstacle = false;			
-		bool bVisited = false;			
-		float fGlobalGoal;				
-		float fLocalGoal;				
-		int x;							
+		bool bObstacle = false;
+		bool bVisited = false;
+		float fGlobalGoal;
+		float fLocalGoal;
+		int x;
 		int y;
-		vector<sNode*> vecNeighbours;	
-		sNode* parent;					
-	
+		vector<sNode*> vecNeighbours;
+		sNode* parent;
+
 	};
 
 	sNode *nodes = nullptr;
@@ -67,7 +67,7 @@ private:
 
 
 protected:
-	
+
 
 	void OnUserCreate()
 	{
@@ -80,9 +80,9 @@ protected:
 				nodes[y * nMapWidth + x].bObstacle = false;
 				nodes[y * nMapWidth + x].parent = nullptr;
 				nodes[y * nMapWidth + x].bVisited = false;
-				
+
 			}
-		
+
 		for (int x = 0; x < nMapWidth; x++)
 			for (int y = 0; y < nMapHeight; y++)
 			{
@@ -105,16 +105,16 @@ protected:
 					nodes[y*nMapWidth + x].vecNeighbours.push_back(&nodes[(y + 1) * nMapWidth + (x + 1)]);
 				*/
 			}
-			
+
 
 		nodeStart = &nodes[0];
-		nodeEnd = &nodes[nMapHeight  * nMapWidth -1];
-		
+		nodeEnd = &nodes[9*40+9-1];
+
 	}
 public:
 	void Solve_AStar()
 	{
-		
+
 		for (int x = 0; x < nMapWidth; x++)
 			for (int y = 0; y < nMapHeight; y++)
 			{
@@ -122,10 +122,10 @@ public:
 				nodes[y*nMapWidth + x].bVisited = false;
 				nodes[y*nMapWidth + x].fGlobalGoal = INFINITY;
 				nodes[y*nMapWidth + x].fLocalGoal = INFINITY;
-				nodes[y*nMapWidth + x].parent = nullptr;	
+				nodes[y*nMapWidth + x].parent = nullptr;
 			}
 
-		auto distance = [](sNode* a, sNode* b) 
+		auto distance = [](sNode* a, sNode* b)
 		{
 			return sqrtf((a->x - b->x)*(a->x - b->x) + (a->y - b->y)*(a->y - b->y));
 		};
@@ -144,7 +144,7 @@ public:
 
 		while (!listNotTestedNodes.empty() && nodeCurrent != nodeEnd)
 		{
-			
+
 			listNotTestedNodes.sort([](const sNode* lhs, const sNode* rhs) { return lhs->fGlobalGoal < rhs->fGlobalGoal; });
 
 			while (!listNotTestedNodes.empty() && listNotTestedNodes.front()->bVisited)
@@ -154,7 +154,7 @@ public:
 				break;
 
 			nodeCurrent = listNotTestedNodes.front();
-			nodeCurrent->bVisited = true; 
+			nodeCurrent->bVisited = true;
 
 			for (auto nodeNeighbour : nodeCurrent->vecNeighbours)
 			{
@@ -174,7 +174,7 @@ public:
 		}
 	}
 	void path() {
-		
+
 		if (nodeEnd != nullptr)
 		{
 			sNode *p = nodeEnd;
@@ -200,15 +200,15 @@ int main(int argc, char ** argv) {
 		for (int y = 0; y < boxOnY; y++)
 		{
 			box[x][y].setSize(Vector2f(float(boxSizeX), float(boxSizeY)));
-			box[x][y].setOutlineThickness(1.0f);
+			box[x][y].setOutlineThickness(1.2f);
 			box[x][y].setOutlineColor(Color::Black);
 			box[x][y].setFillColor(Color::Blue);
 
 		}
 	box[0][0].setFillColor(Color::Green);
-	//box[9][9].setFillColor(Color::Red);
+	box[9][9].setFillColor(Color::Red);
 	while (window.isOpen()) {
-		
+
 		Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == Event::EventType::Closed)
@@ -255,7 +255,7 @@ int main(int argc, char ** argv) {
 			if (Keyboard::isKeyPressed(Keyboard::LShift) || Keyboard::isKeyPressed(Keyboard::RShift)) {
 				if (Mouse::isButtonPressed(Mouse::Left))
 				{
-					
+
 					for (int x = 0; x < boxOnX; x++)
 						for (int y = 0; y < boxOnY; y++)
 						{
@@ -269,7 +269,7 @@ int main(int argc, char ** argv) {
 					int y = floor(mousePos.y / boxSizeY);
 					box[x][y].setFillColor(Color::Red);
 					astar.setEnd(x, y);
-					astar.setObstacle(x, y);
+					//astar.setObstacle(x, y);
 				}
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Enter))
@@ -278,12 +278,12 @@ int main(int argc, char ** argv) {
 				for (int x = 0; x < boxOnX; x++)
 					for (int y = 0; y < boxOnY; y++)
 					{
-						if (astar.getVisitedState(x, y) == 1 && !(box[x][y].getFillColor() == Color::Green))
-							box[x][y].setFillColor(Color::White);
-						
+						if (astar.getVisitedState(x, y) == 1 && !(box[x][y].getFillColor() == Color::Green) && !(box[x][y].getFillColor() == Color::Red))
+							box[x][y].setFillColor(Color(255,255,204));
+
 						if(astar.getVisitedState(x, y) == 0 && !(box[x][y].getFillColor() == Color::Green) && !(box[x][y].getFillColor() == Color::Red) && !(box[x][y].getFillColor() == Color::Magenta))
 							box[x][y].setFillColor(Color::Blue);
-							
+
 						if (astar.getParentState(x, y) == 1 && !(box[x][y].getFillColor() == Color::Red))
 							box[x][y].setFillColor(Color::Yellow);
 					}
