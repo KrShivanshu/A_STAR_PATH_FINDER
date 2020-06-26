@@ -59,8 +59,8 @@ private:
 	};
 
 	sNode *nodes = nullptr;
-	int nMapWidth = 40;
-	int nMapHeight = 40;
+	int nMapWidth = 15;
+	int nMapHeight = 20;
 
 	sNode *nodeStart = nullptr;
 	sNode *nodeEnd = nullptr;
@@ -108,7 +108,7 @@ protected:
 
 
 		nodeStart = &nodes[0];
-		nodeEnd = &nodes[9*40+9-1];
+		nodeEnd = &nodes[12];
 
 	}
 public:
@@ -192,21 +192,21 @@ public:
 
 int main(int argc, char ** argv) {
 	AStar astar;
-	const int boxOnX = 40, boxOnY = 40;
-	RenderWindow window(sf::VideoMode(640.0f, 640.0f), "A-Star PathFinder", Style::Close | Style::Titlebar);
+	const int boxOnX = 15, boxOnY = 20;
+	RenderWindow window(sf::VideoMode(480.0f, 640.0f), "A-Star PathFinder", Style::Close | Style::Titlebar);
 	RectangleShape box[boxOnX][boxOnY];
-	const int boxSizeX = 16, boxSizeY = 16;
+	const int boxSizeX = 32, boxSizeY = 32;
 	for (int x = 0; x < boxOnX; x++)
 		for (int y = 0; y < boxOnY; y++)
 		{
 			box[x][y].setSize(Vector2f(float(boxSizeX), float(boxSizeY)));
-			box[x][y].setOutlineThickness(1.2f);
+			box[x][y].setOutlineThickness(5.2f);
 			box[x][y].setOutlineColor(Color::Black);
 			box[x][y].setFillColor(Color::Blue);
 
 		}
 	box[0][0].setFillColor(Color::Green);
-	box[9][9].setFillColor(Color::Red);
+	box[12][0].setFillColor(Color::Red);
 	while (window.isOpen()) {
 
 		Event event;
@@ -219,16 +219,20 @@ int main(int argc, char ** argv) {
 				Vector2i  mousePos = Mouse::getPosition(window);
 				int x = floor(mousePos.x / boxSizeX);
 				int y = floor(mousePos.y / boxSizeY);
-				if (box[x][y].getFillColor() != Color::Green && box[x][y].getFillColor() != Color::Red) {
-					box[x][y].setFillColor(Color::Magenta);
-					astar.setObstacle(x, y);
+				if (x <= 15 && x >= 0 && y <= 20 && y >= 0) {
+					if (box[x][y].getFillColor() != Color::Green && box[x][y].getFillColor() != Color::Red) {
+						box[x][y].setFillColor(Color::Magenta);
+						astar.setObstacle(x, y);
+					}
 				}
+				
 			}
 			if (Mouse::isButtonPressed(Mouse::Right))
 			{
 				Vector2i  mousePos = Mouse::getPosition(window);
 				int x = floor(mousePos.x / boxSizeX);
 				int y = floor(mousePos.y / boxSizeY);
+				if (x <= 15 && x >= 0 && y <= 20 && y >= 0) 
 				if (box[x][y].getFillColor() != Color::Green && box[x][y].getFillColor() != Color::Red) {
 					box[x][y].setFillColor(Color::Blue);
 					astar.unsetObstacle(x, y);
@@ -248,8 +252,10 @@ int main(int argc, char ** argv) {
 					Vector2i  mousePos = Mouse::getPosition(window);
 					int x = floor(mousePos.x / boxSizeX);
 					int y = floor(mousePos.y / boxSizeY);
-					box[x][y].setFillColor(Color::Green);
-					astar.setStart(x, y);
+					if (x <= 15 && x >= 0 && y <= 20 && y >= 0) {
+						box[x][y].setFillColor(Color::Green);
+						astar.setStart(x, y);
+					}
 				}
 			}
 			if (Keyboard::isKeyPressed(Keyboard::LShift) || Keyboard::isKeyPressed(Keyboard::RShift)) {
@@ -267,12 +273,14 @@ int main(int argc, char ** argv) {
 					Vector2i  mousePos = Mouse::getPosition(window);
 					int x = floor(mousePos.x / boxSizeX);
 					int y = floor(mousePos.y / boxSizeY);
-					box[x][y].setFillColor(Color::Red);
-					astar.setEnd(x, y);
-					//astar.setObstacle(x, y);
+					if (x <= 15 && x >= 0 && y <= 20 && y >= 0) {
+						box[x][y].setFillColor(Color::Red);
+						astar.setEnd(x, y);
+						//astar.setObstacle(x, y);
+					}
 				}
 			}
-			if (Keyboard::isKeyPressed(Keyboard::Enter))
+			if (Keyboard::isKeyPressed(Keyboard::Return))
 			{
 				astar.Solve_AStar();
 				for (int x = 0; x < boxOnX; x++)
@@ -285,7 +293,11 @@ int main(int argc, char ** argv) {
 							box[x][y].setFillColor(Color::Blue);
 
 						if (astar.getParentState(x, y) == 1 && !(box[x][y].getFillColor() == Color::Red))
+						{
 							box[x][y].setFillColor(Color::Yellow);
+							//box[x][y].setOutlineThickness(1.2f);
+							//box[x][y].setOutlineColor(Color::Yellow);
+						}
 					}
 			}
 		}
