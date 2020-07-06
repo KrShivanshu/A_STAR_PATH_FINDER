@@ -241,6 +241,11 @@ int main(int argc, char ** argv) {
 			if (Keyboard::isKeyPressed(Keyboard::LControl) || Keyboard::isKeyPressed(Keyboard::RControl)) {
 				if (Mouse::isButtonPressed(Mouse::Left))
 				{
+					Vector2i  mousePos = Mouse::getPosition(window);
+					int x = floor(mousePos.x / boxSizeX);
+					int y = floor(mousePos.y / boxSizeY);
+					if (x <= 15 && x >= 0 && y <= 20 && y >= 0) {
+
 					for (int x = 0; x < boxOnX; x++)
 						for (int y = 0; y < boxOnY; y++)
 						{
@@ -249,10 +254,7 @@ int main(int argc, char ** argv) {
 								astar.unsetObstacle(x, y);
 							}
 						}
-					Vector2i  mousePos = Mouse::getPosition(window);
-					int x = floor(mousePos.x / boxSizeX);
-					int y = floor(mousePos.y / boxSizeY);
-					if (x <= 15 && x >= 0 && y <= 20 && y >= 0) {
+					
 						box[x][y].setFillColor(Color::Green);
 						astar.setStart(x, y);
 					}
@@ -261,6 +263,10 @@ int main(int argc, char ** argv) {
 			if (Keyboard::isKeyPressed(Keyboard::LShift) || Keyboard::isKeyPressed(Keyboard::RShift)) {
 				if (Mouse::isButtonPressed(Mouse::Left))
 				{
+					Vector2i  mousePos = Mouse::getPosition(window);
+					int x = floor(mousePos.x / boxSizeX);
+					int y = floor(mousePos.y / boxSizeY);
+					if (x <= 15 && x >= 0 && y <= 20 && y >= 0) {
 
 					for (int x = 0; x < boxOnX; x++)
 						for (int y = 0; y < boxOnY; y++)
@@ -270,10 +276,7 @@ int main(int argc, char ** argv) {
 								astar.unsetObstacle(x, y);
 							}
 						}
-					Vector2i  mousePos = Mouse::getPosition(window);
-					int x = floor(mousePos.x / boxSizeX);
-					int y = floor(mousePos.y / boxSizeY);
-					if (x <= 15 && x >= 0 && y <= 20 && y >= 0) {
+					
 						box[x][y].setFillColor(Color::Red);
 						astar.setEnd(x, y);
 						//astar.setObstacle(x, y);
@@ -287,7 +290,7 @@ int main(int argc, char ** argv) {
 					for (int y = 0; y < boxOnY; y++)
 					{
 						if (astar.getVisitedState(x, y) == 1 && !(box[x][y].getFillColor() == Color::Green) && !(box[x][y].getFillColor() == Color::Red))
-							box[x][y].setFillColor(Color(255,255,204));
+							box[x][y].setFillColor(Color(255,255,255,225));
 
 						if(astar.getVisitedState(x, y) == 0 && !(box[x][y].getFillColor() == Color::Green) && !(box[x][y].getFillColor() == Color::Red) && !(box[x][y].getFillColor() == Color::Magenta))
 							box[x][y].setFillColor(Color::Blue);
